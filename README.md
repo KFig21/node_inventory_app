@@ -1,0 +1,1 @@
+# node_inventory_app
