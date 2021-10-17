@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  div.container
+    h1 #{title}
+
+    a(href=category.url+'/update')
+      h4 Update Category Name
+      
+    a(href=category.url+'/update_image')
+      h4 Update Category Image
+    
+    div.contianer
+      each val, index in item_list
+        a(href=val.url) 
+          div.list-item-container
+            h3 #{val.name}
+            h3 #{val.price}
+
+      button(onclick='window.history.back()') Back

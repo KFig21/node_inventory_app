@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  div.container
+    h1= name
+
+    a(href=item.url+'/update')
+      h4 Update Item
+
+    a(href=item.url+'/update_image')
+      h4 Update Image
+
+    a(href=item.url+'/delete')
+      h4 DELETE ITEM
+    
+    div.contianer
+      h3 Price: #{item.price}
+      h3 Brand: #{item.brand[0].name}
+      h3 Stock: #{item.stock}
+      h3 Description: #{item.description}
+      h3 Categories: 
+        each val, index in item.categories
+          a(href=val.url) #{val.name}
+            if index < item.categories.length - 1
+              |,
+
+
+      button(onclick='window.history.back()') Back

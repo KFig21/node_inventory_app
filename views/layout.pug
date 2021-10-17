@@ -1,0 +1,45 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    nav 
+      a(href='/catalog/')
+
+        svg.header-img(version='1.0' xmlns='http://www.w3.org/2000/svg' width='50pt' height='75pt' viewBox='0 0 396.000000 547.000000' preserveAspectRatio='xMidYMid meet')
+          g(transform='translate(0.000000,547.000000) scale(0.100000,-0.100000)' fill='#ffffff' stroke='none')
+            path(d='M0 5090 l0 -380 1073 0 c1080 0 1231 -4 1387 -35 254 -51 496 -242\
+            616 -486 166 -338 167 -714 3 -1047 -122 -247 -316 -406 -597 -488 -127 -37\
+            -285 -44 -949 -44 l-603 0 0 -1305 0 -1305 385 0 385 0 0 919 0 919 368 5\
+            c319 4 379 8 457 25 566 127 1006 471 1250 977 100 209 146 350 161 498 3 37\
+            10 67 15 67 14 0 5 494 -9 555 -7 28 -15 73 -19 100 -12 98 -81 294 -155 439\
+            -18 33 -32 63 -33 66 -2 14 -36 66 -109 169 -134 189 -354 397 -511 482 -33\
+            17 -64 35 -70 39 -41 32 -230 114 -320 140 -254 74 -152 70 -1507 70 l-1218 0\
+            0 -380z')
+            path(d='M0 4145 l0 -375 1083 0 c595 0 1092 -3 1105 -6 63 -17 69 -174 7\
+            -198 -9 -3 -507 -6 -1106 -6 l-1089 0 0 -1780 0 -1780 375 0 375 0 0 1400 0\
+            1400 784 0 783 0 95 24 c165 42 299 117 405 228 43 44 118 177 143 253 33 100\
+            50 222 50 360 -1 231 -44 391 -144 539 -72 106 -150 171 -291 242 -152 76\
+            -109 74 -1422 74 l-1153 0 0 -375z')
+      ul
+        li
+          a(href='/catalog/item') Items
+        li
+          a(href='/catalog/brand') Brands
+        li
+          a(href='/catalog/category') Categories
+    
+    div.content-container
+      div.sidebar
+        block sidebar
+        h2 Catalog
+          ul
+            li
+              a(href='/catalog/item') Items
+            li
+              a(href='/catalog/brand') Brands
+            li
+              a(href='/catalog/category') Categories
+
+      block content

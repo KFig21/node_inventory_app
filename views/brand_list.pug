@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  div.container
+    header
+      div.header-container
+        div.directory-container
+          span.directory-title Brands
+          span.directory-count (#{brand_count})
+
+        a.title-add-button(href="/catalog/brand/create")
+          h4 + Add brand
+
+    div.item-list-container
+      each brand in brand_list
+        a(href=brand.url)
+          div.list-brand
+            div.list-item-img-container
+              img(src='/images/'+brand.imageURL)
+            div.list-brand-detail-container
+              span.list-brand-name #{brand.name}
+
+      else
+        h3 There are no brand options.

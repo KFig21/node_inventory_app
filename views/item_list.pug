@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  div.container
+    header
+      div.header-container
+        div.directory-container
+          span.directory-title Items
+          span.directory-count (#{item_count})
+
+        a.title-add-button(href="/catalog/item/create")
+          h4 + Add item
+
+    div.item-list-container
+      each item in item_list
+        div
+          a(href=item.url)
+            div.list-item
+              div.list-item-img-container
+                img(src='/images/'+item.imageURL)
+              div.list-item-detail-container
+                div.list-item-price #{item.price}
+                div.list-item-name #{item.brand[0].name} - #{item.name}
+                div.list-item-stock Qty: #{item.stock}        
+                div.list-item-categories      
+                  each val, index in item.categories
+                    a.list-item-category(href=val.url) #{val.name}
+                      if index < item.categories.length - 1
+
+      else
+        h3 There are no item options.

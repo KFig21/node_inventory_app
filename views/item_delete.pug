@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  div.container
+    h1= name
+
+    p Do you really want to delete this Item?
+    
+    form(method='POST' action='')
+      div.form-group
+        input#id.form-control(type='hidden',name='id', required='true', value=item._id )
+
+      button.btn.btn-primary(type='submit') Delete
+    
+    div.contianer
+      h3 Price: #{item.price}
+      h3 Brand: #{item.brand[0].name}
+      h3 Stock: #{item.stock}
+      h3 Description: #{item.description}
+      h3 Categories: 
+        each val, index in item.categories
+          a(href=val.url) #{val.name}
+            if index < item.categories.length - 1
+              |,
+
+
+      button(onclick='window.history.back()') Back

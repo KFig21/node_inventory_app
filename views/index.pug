@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  div.container
+    h1 Inventory
+    
+    div.contianer
+      ul.ul-count
+        li
+          a(href='/catalog/item') Items - !{data.item_count}
+        li
+          a(href='/catalog/brand') Brands - !{data.brand_count}
+        li
+          a(href='/catalog/category') Categories - !{data.category_count}
+        
+

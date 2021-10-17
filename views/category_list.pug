@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  div.container
+    header
+      div.header-container
+        div.directory-container
+          span.directory-title Categories
+          span.directory-count (#{category_count})
+
+        a.title-add-button(href="/catalog/category/create")
+          h4 + Add category
+
+    div.item-list-container
+      each category in category_list
+        a(href=category.url)
+          div.list-category
+            div.list-category-img-container
+              img(src='/images/'+category.imageURL)
+            div.list-brand-detail-container
+              span.list-category-name #{category.name}
+
+      else
+        h3 There are no categories.
