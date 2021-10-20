@@ -2,19 +2,33 @@ extends layout
 
 block content
   div.container
-    h1 #{title}
+    header
+      div.header-container
+        div.directory-container
+          span.directory-title #{category.name}
+          span.directory-count (#{item_count})
 
-    a(href=category.url+'/update')
-      h4 Update Category Name
-      
-    a(href=category.url+'/update_image')
-      h4 Update Category Image
+        a.title-add-button(href=category.url+'/update')
+          h4 Update Category Name
+          
+        a.title-add-button(href=category.url+'/update_image')
+          h4 Update Category Image
+
+        button.header-back-button(onclick='window.history.back()') Back
     
-    div.contianer
-      each val, index in item_list
-        a(href=val.url) 
-          div.list-item-container
-            h3 #{val.name}
-            h3 #{val.price}
+    div.item-list-container
+      each item in item_list
+        div
+          a(href=item.url)
+            div.list-item
+              div.list-item-img-container
+                img(src='/images/'+item.imageURL)
+              div.list-item-detail-container
+                div.list-item-price #{item.price}
+                div.list-item-name #{item.brand[0].name} - #{item.name}
+                div.list-item-stock Qty: #{item.stock}        
+                div.list-item-categories      
+                  each val, index in item.categories
+                    a.list-item-category(href=val.url) #{val.name}
 
-      button(onclick='window.history.back()') Back
+      

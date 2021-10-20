@@ -34,7 +34,7 @@ exports.item_list = function (req, res) {
       }
       // Successful, so render.
       res.render("item_list", {
-        title: "Items",
+        title: "Items - Party Planner",
         item_list: results.list_item,
         item_count: results.item_count,
       });
@@ -67,6 +67,11 @@ exports.item_detail = function (req, res, next) {
       }
       // Successful, so render.
       res.render("item_detail", {
+        title:
+          results.item.brand[0].name +
+          " " +
+          results.item.name +
+          " - Party Planner",
         name: results.item.name,
         item: results.item,
       });
@@ -90,7 +95,7 @@ exports.item_create_get = function (req, res) {
         return next(err);
       }
       res.render("item_form", {
-        title: "Create Item",
+        title: "Create Item - Party Planner",
         brands: results.brands,
         categories: results.categories,
       });
@@ -221,7 +226,7 @@ exports.item_delete_get = function (req, res, next) {
       }
       // Successful, so render.
       res.render("item_delete", {
-        title: "Delete Item",
+        title: "Delete Item - Party Planner",
         item: results.item,
       });
     }
@@ -315,7 +320,7 @@ exports.item_update_get = function (req, res, next) {
         }
       }
       res.render("item_update_info", {
-        title: "Update Item",
+        title: "Update Item - Party Planner",
         brands: results.brands,
         categories: results.categories,
         item: results.item,
@@ -463,7 +468,7 @@ exports.item_update_image_get = function (req, res, next) {
         }
       }
       res.render("item_update_image", {
-        title: "Update Image",
+        title: "Update Image - Party Planner",
         brands: results.brands,
         categories: results.categories,
         item: results.item,

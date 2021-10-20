@@ -2,15 +2,32 @@ extends layout
 
 block content
   div.container
-    h1 Inventory
-    
-    div.contianer
-      ul.ul-count
-        li
-          a(href='/catalog/item') Items - !{data.item_count}
-        li
-          a(href='/catalog/brand') Brands - !{data.brand_count}
-        li
-          a(href='/catalog/category') Categories - !{data.category_count}
+    header
+      div.header-container
+        h1.directory-title Party Planner Catalog
+
+
+    div.catalog-list-container
+
+        a(href='/catalog/item')
+          div.list-catalog
+            div.list-catalog-img-container
+              img(src='/images/items.png')
+            div.list-catalog-detail-container
+              span.list-catalog-name Items - !{data.item_count}
+
+        a(href='/catalog/brand')
+          div.list-catalog
+            div.list-catalog-img-container
+              img(src='/images/brands.png')
+            div.list-catalog-detail-container
+              span.list-catalog-name Brands - !{data.brand_count}
+
+        a(href='/catalog/category')
+          div.list-catalog
+            div.list-catalog-img-container
+              img(src='/images/categories.png')
+            div.list-catalog-detail-container
+              span.list-catalog-name Categories - !{data.category_count}
         
 

@@ -2,12 +2,16 @@ extends layout
 
 block content
   div.container
-    h1= title
+    header
+      div.header-container
+        h1.directory-title Update Category Image - #{category.name}
+
+        button.header-back-button(onclick='window.history.back()') Back
     
-    div.contianer
+    div.form-container
       form(method='POST' enctype="multipart/form-data" action='')
         div.form-group
-          label(for='imageURL') Image:
+          label.form-labe(for='imageURL') Image:
           input#imageURL.form-control(type='file', placeholder='image' name='imageURL' required='true' value=(undefined===category ? '' : category.imageURL) )
         div.hidden
           label(for='name') Name:
@@ -15,11 +19,10 @@ block content
         div.hidden
           label(for='oldImageURL') oldImageURL:
           input#oldImageURL.form-control(type='text', placeholder='oldImageURL' name='oldImageURL' required='true' value=(undefined===category ? '' : category.imageURL) )
-        button.btn.btn-primary(type='submit') Submit
+        div.center-container
+          button.submit-button(type='submit') Submit
 
       if errors
         ul
           for error in errors
             li!= error.msg
-
-      button(onclick='window.history.back()') Back

@@ -33,7 +33,7 @@ exports.brand_list = function (req, res, next) {
       }
       // Successful, so render.
       res.render("brand_list", {
-        title: "Brands",
+        title: "Brands - Party Planner",
         brand_list: results.list_brand,
         brand_count: results.brand_count,
       });
@@ -49,7 +49,16 @@ exports.brand_detail = function (req, res, next) {
         Brand.findById(req.params.id).exec(callback);
       },
       brand_items: function (callback) {
-        Item.find({ brand: req.params.id }, "name price").exec(callback);
+        Item.find(
+          { brand: req.params.id },
+          "name price brand stock description categories imageURL"
+        )
+          .populate("brand")
+          .populate("categories")
+          .exec(callback);
+      },
+      item_count: function (callback) {
+        Item.countDocuments({ brand: req.params.id }, callback); // Pass an empty object as match condition to find all documents of this collection
       },
     },
     function (err, results) {
@@ -64,9 +73,10 @@ exports.brand_detail = function (req, res, next) {
       }
       // Successful, so render.
       res.render("brand_detail", {
-        title: results.brand.name,
+        title: results.brand.name + " - Party Planner",
         brand: results.brand,
         item_list: results.brand_items,
+        item_count: results.item_count,
       });
     }
   );
@@ -75,7 +85,7 @@ exports.brand_detail = function (req, res, next) {
 // Display brand create form on GET.
 exports.brand_create_get = function (req, res) {
   res.render("brand_form", {
-    title: "Create Brand",
+    title: "Create Brand - Party Planner",
   });
 };
 
@@ -160,7 +170,10 @@ exports.brand_update_get = function (req, res, next) {
       return next(err);
     }
     // Success.
-    res.render("brand_update_info", { title: "Update Brand", brand: brand });
+    res.render("brand_update_info", {
+      title: "Update Brand - Party Planner",
+      brand: brand,
+    });
   });
 };
 
@@ -214,7 +227,7 @@ exports.brand_update_image_get = function (req, res, next) {
     }
     // Success.
     res.render("brand_update_image", {
-      title: "Update Brand image",
+      title: "Update Brand image - Party Planner",
       brand: brand,
     });
   });

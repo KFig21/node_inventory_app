@@ -20,7 +20,11 @@ exports.index = function (req, res) {
       },
     },
     function (err, results) {
-      res.render("index", { title: "Catalog", error: err, data: results });
+      res.render("index", {
+        title: "Catalog - Party Planner",
+        error: err,
+        data: results,
+      });
     }
   );
 };

@@ -2,27 +2,36 @@ extends layout
 
 block content
   div.container
-    h1= name
+    div.container
+      header
+        div.header-container
 
-    a(href=item.url+'/update')
-      h4 Update Item
+          a.title-add-button(href=item.url+'/update')
+            h4 Update Item Info
 
-    a(href=item.url+'/update_image')
-      h4 Update Image
+          a.title-add-button(href=item.url+'/update_image')
+            h4 Update Item Image
 
-    a(href=item.url+'/delete')
-      h4 DELETE ITEM
+          button.header-back-button(onclick='window.history.back()') Back
+
     
-    div.contianer
-      h3 Price: #{item.price}
-      h3 Brand: #{item.brand[0].name}
-      h3 Stock: #{item.stock}
-      h3 Description: #{item.description}
-      h3 Categories: 
-        each val, index in item.categories
-          a(href=val.url) #{val.name}
-            if index < item.categories.length - 1
-              |,
+    div.item-detail-contianer
+      div.item-detail-img-container
+        img(src='/images/'+item.imageURL)
+      div.item-detail-info-container
+        h3.item-detail-brand 
+          a(href=item.brand[0].url) #{item.brand[0].name} 
+        h3.item-detail-name #{item.name}
+        h3.item-detail-price $#{item.price}
+        h3.item-detail-stock QTY: #{item.stock}
+        h3.item-detail-desc #{item.description}
+        div.item-detail-categories-container
+          h3.item-detail-categories-title Categories:
+          div.item-detail-categories
+            each val, index in item.categories
+              a.item-detail-category(href=val.url) #{val.name}
 
+    br
 
-      button(onclick='window.history.back()') Back
+    a.detail-delete-button(href=item.url+'/delete')
+      h4 DELETE ITEM

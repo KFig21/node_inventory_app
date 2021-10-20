@@ -2,21 +2,26 @@ extends layout
 
 block content
   div.container
-    h1= title
+    header
+      div.header-container
+        h1.directory-title Create a Brand
+
+        button.header-back-button(onclick='window.history.back()') Back
     
-    div.contianer
+    div.form-container
       form(method='POST' enctype="multipart/form-data" action='')
         div.form-group
-          label(for='name') Name:
+          label.form-label(for='name') Name:
           input#name.form-control(type='text', placeholder='Name' name='name' required='true' value=(undefined===brand ? '' : brand.name) )
         div.form-group
-          label(for='imageURL') Image:
+          label.form-label(for='imageURL') Image:
           input#imageURL.form-control(type='file', placeholder='image' name='imageURL' required='true' value=(undefined===brand ? '' : brand.imageURL) )
-        button.btn.btn-primary(type='submit') Submit
+        div.center-container
+          button.submit-button(type='submit') Submit
 
       if errors
         ul
           for error in errors
             li!= error.msg
-
-      button(onclick='window.history.back()') Back
+    br
+    h2 Brands can only be deleted by admin

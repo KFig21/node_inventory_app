@@ -33,7 +33,7 @@ exports.category_list = function (req, res) {
       }
       // Successful, so render.
       res.render("category_list", {
-        title: "Items",
+        title: "Categories - Party Planner",
         category_list: results.list_category,
         category_count: results.category_count,
       });
@@ -49,7 +49,16 @@ exports.category_detail = function (req, res, next) {
         Category.findById(req.params.id).exec(callback);
       },
       category_items: function (callback) {
-        Item.find({ categories: req.params.id }, "name price").exec(callback);
+        Item.find(
+          { categories: req.params.id },
+          "name price brand stock description categories imageURL"
+        )
+          .populate("brand")
+          .populate("categories")
+          .exec(callback);
+      },
+      item_count: function (callback) {
+        Item.countDocuments({ categories: req.params.id }, callback); // Pass an empty object as match condition to find all documents of this collection
       },
     },
     function (err, results) {
@@ -66,9 +75,10 @@ exports.category_detail = function (req, res, next) {
       }
       // Successful, so render.
       res.render("category_detail", {
-        title: results.category.name,
+        title: results.category.name + " - Party Planner",
         category: results.category,
         item_list: results.category_items,
+        item_count: results.item_count,
       });
     }
   );
@@ -77,7 +87,7 @@ exports.category_detail = function (req, res, next) {
 // Display category create form on GET.
 exports.category_create_get = function (req, res) {
   res.render("category_form", {
-    title: "Create Category",
+    title: "Create Category - Party Planner",
   });
 };
 
@@ -121,7 +131,7 @@ exports.category_create_post = [
           return next(err);
         }
         res.render("category_form", {
-          title: "Create Category",
+          title: "Create Category - Party Planner",
           errors: errors.array(),
         });
       });
@@ -150,14 +160,65 @@ exports.category_delete_post = function (req, res) {
 };
 
 // Display category update INFO form on GET.
-exports.category_update_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: category update GET");
+exports.category_update_get = function (req, res, next) {
+  Category.findById(req.params.id, function (err, category) {
+    if (err) {
+      return next(err);
+    }
+    if (category == null) {
+      // No results.
+      var err = new Error("Category not found");
+      err.status = 404;
+      return next(err);
+    }
+    // Success.
+    res.render("category_update_info", {
+      title: "Update Category - Party Planner",
+      category: category,
+    });
+  });
 };
 
 // Handle category update INFO on POST.
-exports.category_update_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: category update POST");
-};
+exports.category_update_post = [
+  // Validate and santize fields.
+  body("name", "Name must not be empty.").trim().isLength({ min: 1 }).escape(),
+
+  // Process request after validation and sanitization.
+  (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    // Create a Category object with escaped and trimmed data.
+    var category = new Category({
+      name: req.body.name,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render the form again with sanitized values and error messages.
+      res.render("category_form", {
+        title: "Update Category",
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data from form is valid. Update the record.
+      Category.findByIdAndUpdate(
+        req.params.id,
+        category,
+        {},
+        function (err, category) {
+          if (err) {
+            return next(err);
+          }
+          // Successful - redirect to genre detail page.
+          res.redirect(category.url);
+        }
+      );
+    }
+  },
+];
 
 // Display category update IMAGE form on GET.
 exports.category_update_image_get = function (req, res, next) {
@@ -173,7 +234,7 @@ exports.category_update_image_get = function (req, res, next) {
     }
     // Success.
     res.render("category_update_image", {
-      title: "Update Category image",
+      title: "Update Category image - Party Planner",
       category: category,
     });
   });

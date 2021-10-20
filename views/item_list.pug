@@ -25,7 +25,6 @@ block content
                 div.list-item-categories      
                   each val, index in item.categories
                     a.list-item-category(href=val.url) #{val.name}
-                      if index < item.categories.length - 1
 
       else
         h3 There are no item options.
