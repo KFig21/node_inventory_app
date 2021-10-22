@@ -18,7 +18,9 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 //Set up mongoose connection
 var mongoose = require("mongoose");
-var mongoDB = process.env.DB_CONNECTION_STRING;
+var dev_db_url =
+  "mongodb+srv://ppuser:pppassword@ppcluster.jbbh2.mongodb.net/catalog?retryWrites=true&w=majority";
+var mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
