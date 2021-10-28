@@ -1,1 +1,1 @@
-# node_inventory_app
+# Party Planner
