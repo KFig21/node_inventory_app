@@ -7,7 +7,7 @@ var async = require("async");
 const { body, validationResult } = require("express-validator");
 const fs = require("fs");
 
-// Display list of all brand.
+// Display list of all brands.
 exports.brand_list = function (req, res, next) {
   async.parallel(
     {

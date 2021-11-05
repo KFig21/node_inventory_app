@@ -729,6 +729,31 @@ header {
   border-radius: 100px;
 }
 
+/* delete */
+/* delete */
+.button-delete-button {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: var(--accentColor2);
+  color: whitesmoke;
+  padding: 9px 12px;
+  border-radius: 2px;
+  margin: 10px 5px 0px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.35s ease;
+  cursor: pointer;
+}
+
+.button-delete-button:hover {
+  transform: scale(1.1);
+  background-color: crimson;
+  border-radius: 100px;
+}
+
 /* footer */
 /* footer */
 footer {
