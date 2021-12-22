@@ -8,29 +8,32 @@ var item_controller = require("../controllers/itemController");
 var brand_controller = require("../controllers/brandController");
 var category_controller = require("../controllers/categoryController");
 
-var multer = require("multer");
-var path = require("path");
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/images");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-var upload = multer({
-  storage: storage,
-  fileFilter: function (req, file, callback) {
-    var ext = path.extname(file.originalname);
-    if (ext !== ".png" && ext !== ".jpg" && ext !== ".gif" && ext !== ".jpeg") {
-      return callback(new Error("Only images are allowed"));
-    }
-    callback(null, true);
-  },
-  limits: { fileSize: 1000000 },
-});
+// var multer = require("multer");
+// var path = require("path");
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "public/images");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now() + "-" + file.originalname);
+//   },
+// });
+// var upload = multer({
+//   storage: storage,
+//   fileFilter: function (req, file, callback) {
+//     var ext = path.extname(file.originalname);
+//     if (ext !== ".png" && ext !== ".jpg" && ext !== ".gif" && ext !== ".jpeg") {
+//       return callback(new Error("Only images are allowed"));
+//     }
+//     callback(null, true);
+//   },
+//   limits: { fileSize: 1000000 },
+// });
 
-/// FOOD ROUTES ///
+var multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+
+/// ITEM ROUTES ///
 
 // GET catalog home page.
 router.get("/", catalog_controller.index);
@@ -73,7 +76,7 @@ router.get("/item/:id", item_controller.item_detail);
 // GET request for list of all item items.
 router.get("/item", item_controller.item_list);
 
-/// Brand ROUTES ///
+/// BRAND ROUTES ///
 
 // GET request for creating Author. NOTE This must come before route for id (i.e. display brand).
 router.get("/brand/create", brand_controller.brand_create_get);
@@ -113,7 +116,7 @@ router.get("/brand/:id", brand_controller.brand_detail);
 // GET request for list of all brands.
 router.get("/brand", brand_controller.brand_list);
 
-/// Category ROUTES ///
+/// CATEGORY ROUTES ///
 
 // GET request for creating a category. NOTE This must come before route that displays category (uses id).
 router.get("/category/create", category_controller.category_create_get);

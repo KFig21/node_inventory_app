@@ -17,7 +17,7 @@ block content
           a(href=item.url)
             div.list-item
               div.list-item-img-container
-                img(src='/images/'+item.imageURL)
+                img(src='https://party-planner-images.s3.amazonaws.com/' + item.imageURL)
               div.list-item-detail-container
                 div.list-item-price #{item.price}
                 div.list-item-name #{item.brand[0].name} - #{item.name}

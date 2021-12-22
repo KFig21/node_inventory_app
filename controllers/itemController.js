@@ -6,6 +6,7 @@ var Category = require("../models/category");
 var async = require("async");
 const { body, validationResult } = require("express-validator");
 const fs = require("fs");
+const { uploadFile, deleteFile } = require("../s3");
 
 // Display list of all items.
 exports.item_list = function (req, res) {
@@ -129,9 +130,12 @@ exports.item_create_post = [
   body("category.*").escape(),
 
   // Process request after validation and sanitization.
-  (req, res, next) => {
+  async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
+
+    // upload image to S3
+    const result = await uploadFile(req.file);
 
     // Create a Item object with escaped and trimmed data.
     var item = new Item({
@@ -141,22 +145,8 @@ exports.item_create_post = [
       price: req.body.price,
       stock: req.body.stock,
       categories: req.body.category,
-      imageURL: req.file.filename,
+      imageURL: result.key,
     });
-
-    if (req.file && errors.isEmpty()) {
-      item.imageURL = req.file.filename;
-      fs.unlink(`public/images/${req.body.fileName}`, (err) => {
-        if (err) console.log(err);
-        console.log(req.body.fileName, "was deleted");
-      });
-    } else if (
-      req.body.fileName &&
-      req.body.fileName != "null" &&
-      req.body.fileName != "undefined"
-    ) {
-      item.imageURL = req.body.fileName;
-    }
 
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/error messages.
@@ -246,17 +236,17 @@ exports.item_delete_post = function (req, res, next) {
           .exec(callback);
       },
     },
-    function (err, results) {
+    async function (err, results) {
       if (err) {
         return next(err);
       }
       // Success
 
-      // Delete item image from public/images folder
-      fs.unlink(`public/images/${results.item.imageURL}`, (err) => {
-        if (err) console.log(err);
-        console.log(results.item.imageURL, "was deleted");
-      });
+      // Delete item image from S3
+      let item = await Item.findById(req.body.id);
+      if (item.imageURL) {
+        await deleteFile(item.imageURL);
+      }
 
       // Delete object and redirect to the list of items.
       Item.findByIdAndRemove(req.body.id, function deleteItem(err) {
@@ -489,29 +479,23 @@ exports.item_update_image_post = [
   },
 
   // Process request after validation and sanitization.
-  (req, res, next) => {
+  async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
+    // upload image to S3
+    const result = await uploadFile(req.file);
     // Create a Item object with escaped and trimmed data. IDK why but we need the brands and categories, they are hidden in the form. MONGO DB seems to clear item arrays on update for any field
     var item = new Item({
       oldImageURL: req.body.oldImageURL,
       brand: req.body.brand,
       categories: req.body.category,
       _id: req.params.id,
+      imageURL: result.key,
     });
-    // set image file
-    if (req.file && errors.isEmpty()) {
-      item.imageURL = req.file.filename;
-      fs.unlink(`public/images/${req.body.oldImageURL}`, (err) => {
-        if (err) console.log(err);
-        console.log(req.body.oldImageURL, "was deleted");
-      });
-    } else if (
-      req.body.fileName &&
-      req.body.fileName != "null" &&
-      req.body.fileName != "undefined"
-    ) {
-      item.imageURL = req.body.fileName;
+
+    // delete old image from S3
+    if (req.body.oldImageURL) {
+      await deleteFile(req.body.oldImageURL);
     }
 
     if (!errors.isEmpty()) {

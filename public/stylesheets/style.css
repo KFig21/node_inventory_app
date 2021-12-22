@@ -622,8 +622,13 @@ header {
   max-height: 400px;
   padding-right: 30px;
 }
+.item-detail-img-container-no-padding {
+  max-width: 400px;
+  max-height: 400px;
+}
 
-.item-detail-img-container img {
+.item-detail-img-container img,
+.item-detail-img-container-no-padding img {
   max-width: 400px;
   max-height: 400px;
 }

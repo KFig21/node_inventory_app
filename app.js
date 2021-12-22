@@ -13,7 +13,7 @@ var usersRouter = require("./routes/users");
 var catalogRouter = require("./routes/catalog"); //Import routes for "catalog" area of site
 
 var app = express();
-app.use(helmet());
+// app.use(helmet());
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 //Set up mongoose connection

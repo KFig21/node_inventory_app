@@ -17,7 +17,7 @@ block content
     
     div.item-detail-contianer
       div.item-detail-img-container
-        img(src='/images/'+item.imageURL)
+        img(src='https://party-planner-images.s3.amazonaws.com/' + item.imageURL)
       div.item-detail-info-container
         h3.item-detail-brand 
           a(href=item.brand[0].url) #{item.brand[0].name} 

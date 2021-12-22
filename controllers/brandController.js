@@ -6,6 +6,7 @@ var Category = require("../models/category");
 var async = require("async");
 const { body, validationResult } = require("express-validator");
 const fs = require("fs");
+const { uploadFile, deleteFile } = require("../s3");
 
 // Display list of all brands.
 exports.brand_list = function (req, res, next) {
@@ -95,30 +96,18 @@ exports.brand_create_post = [
   body("name", "Name must not be empty.").trim().isLength({ min: 1 }).escape(),
 
   // Process request after validation and sanitization.
-  (req, res, next) => {
+  async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
+
+    // upload image to S3
+    const result = await uploadFile(req.file);
 
     // Create a Brand object with escaped and trimmed data.
     var brand = new Brand({
       name: req.body.name,
-      imageURL: req.file.filename,
+      imageURL: result.key,
     });
-
-    // set image file
-    if (req.file && errors.isEmpty()) {
-      brand.imageURL = req.file.filename;
-      fs.unlink(`public/images/${req.body.fileName}`, (err) => {
-        if (err) console.log(err);
-        console.log(req.body.fileName, "was deleted");
-      });
-    } else if (
-      req.body.fileName &&
-      req.body.fileName != "null" &&
-      req.body.fileName != "undefined"
-    ) {
-      brand.imageURL = req.body.fileName;
-    }
 
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/error messages.
@@ -239,29 +228,21 @@ exports.brand_update_image_post = [
   body("name", "Name must not be empty.").trim().isLength({ min: 1 }).escape(),
 
   // Process request after validation and sanitization.
-  (req, res, next) => {
+  async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-
+    // upload image to S3
+    const result = await uploadFile(req.file);
     // Create a Brand object with escaped and trimmed data.
     var brand = new Brand({
       oldImageURL: req.body.oldImageURL,
       _id: req.params.id,
+      imageURL: result.key,
     });
 
-    // set image file
-    if (req.file && errors.isEmpty()) {
-      brand.imageURL = req.file.filename;
-      fs.unlink(`public/images/${req.body.oldImageURL}`, (err) => {
-        if (err) console.log(err);
-        console.log(req.body.oldImageURL, "was deleted");
-      });
-    } else if (
-      req.body.fileName &&
-      req.body.fileName != "null" &&
-      req.body.fileName != "undefined"
-    ) {
-      brand.imageURL = req.body.fileName;
+    // delete old image from S3
+    if (req.body.oldImageURL) {
+      await deleteFile(req.body.oldImageURL);
     }
 
     if (!errors.isEmpty()) {
