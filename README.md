@@ -1,6 +1,6 @@
 # Party Planner
 
-<p><a href="https://kfig21.github.io/node_inventory_app/" target="_blank" rel="noopener noreferrer">View the project here!</a> 👀</p>
+<p><a href="https://young-brook-21440.herokuapp.com/" target="_blank" rel="noopener noreferrer">View the project here!</a> 👀</p>
 
 
 <h3>Summary</h3>
