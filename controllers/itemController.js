@@ -13,7 +13,10 @@ exports.item_list = function (req, res) {
   async.parallel(
     {
       list_item: function (callback) {
-        Item.find({}, "name price brand stock description categories imageURL")
+        Item.find(
+          {},
+          "name price brand stock description categories imageURL admin"
+        )
           .sort({ name: 1 })
           .populate("brand")
           .populate("categories")

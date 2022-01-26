@@ -7,12 +7,15 @@ block content
         div.directory-container
           span.directory-title #{brand.name}
           span.directory-count (#{item_count})
+        if brand.admin !== true  
+          a.title-add-button(href=brand.url+'/update')
+            h4 Update Brand Name
 
-        a.title-add-button(href=brand.url+'/update')
-          h4 Update Brand Name
+          a.title-add-button(href=brand.url+'/update_image')
+            h4 Update Brand Image
 
-        a.title-add-button(href=brand.url+'/update_image')
-          h4 Update Brand Image
+        else 
+          h4.item-admin-protect-banner Due to misuse of this app this brand is admin protected.
 
         //- button.header-back-button(onclick='window.history.back()') Back
     
@@ -21,6 +24,12 @@ block content
         div
           a(href=item.url)
             div.list-item
+              if item.admin === true
+                div.item-admin-icon-container
+                  p.item-admin-status locked
+              else 
+                div.item-admin-icon-container
+                  p   
               div.list-item-img-container
                 img(src='https://party-planner-images.s3.amazonaws.com/' + item.imageURL)
               div.list-item-detail-container

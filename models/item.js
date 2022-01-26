@@ -10,6 +10,7 @@ var ItemSchema = new Schema({
   brand: [{ type: Schema.Types.ObjectId, ref: "Brand" }],
   categories: [{ type: Schema.Types.ObjectId, ref: "Category" }],
   imageURL: { type: String, required: false },
+  admin: { type: Boolean, required: true, default: false },
 });
 
 // Virtual for item's URL

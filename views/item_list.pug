@@ -16,6 +16,12 @@ block content
         div
           a(href=item.url)
             div.list-item
+              if item.admin === true
+                div.item-admin-icon-container
+                  p.item-admin-status locked
+              else 
+                div.item-admin-icon-container
+                  p   
               div.list-item-img-container
                 img(src='https://party-planner-images.s3.amazonaws.com/' + item.imageURL)
               div.list-item-detail-container

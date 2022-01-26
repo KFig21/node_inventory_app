@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var CategorySchema = new Schema({
   name: { type: String, required: true, maxLength: 40 },
   imageURL: { type: String, required: true },
+  admin: { type: Boolean, required: true, default: false },
 });
 
 // Virtual for author's URL

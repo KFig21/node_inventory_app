@@ -15,6 +15,12 @@ block content
       each brand in brand_list
         a(href=brand.url)
           div.list-brand
+            if brand.admin === true
+              div.item-admin-icon-container
+                p.item-admin-status locked
+            else 
+              div.item-admin-icon-container
+                p   
             div.list-brand-img-container
               img(src='https://party-planner-images.s3.amazonaws.com/' + brand.imageURL)
             div.list-brand-detail-container

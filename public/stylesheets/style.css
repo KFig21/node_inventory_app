@@ -1,6 +1,6 @@
 :root {
   --backgroundColor: rgb(241, 241, 241);
-  --headerColor: rgba(58, 58, 58, 0.96);
+  --headerColor: rgba(58, 58, 58, 0.85);
   --subtext: rgb(154, 159, 161);
   --headerHeight: 75px;
   --accentColor1: #2bc5fc;
@@ -123,14 +123,17 @@ header {
   position: fixed;
   background-color: var(--headerColor);
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(10px);
+  z-index: 9;
 }
 .header-container {
   width: 100%;
-  max-width: 900px;
+  height: 100%;
+  max-width: 960px;
   display: flex;
   justify-content: center;
   position: relative;
+  align-items: center;
 }
 
 .header-back-button {
@@ -277,10 +280,22 @@ header {
   padding: 20px;
   border: solid 1px transparent;
   background-color: white;
+  position: relative;
 }
 
 .list-item:hover {
   border: solid 1px rgb(182, 182, 182);
+}
+
+.item-admin-icon-container {
+  position: absolute;
+  top: 8px;
+  right: 11px;
+}
+
+.item-admin-status {
+  font-weight: 600;
+  color: var(--subtext);
 }
 
 .list-item-img-container {
@@ -288,6 +303,7 @@ header {
   align-items: center;
   justify-content: center;
   min-height: 280px;
+  margin-top: 20px;
 }
 .list-item-img-container img {
   max-width: 250px;
@@ -404,6 +420,7 @@ header {
   padding: 20px;
   border: solid 1px transparent;
   background-color: white;
+  position: relative;
 }
 
 .list-brand:hover {
@@ -615,6 +632,10 @@ header {
   border-radius: 10px;
   display: flex;
   min-width: 600px;
+}
+
+.item-admin-protect-banner {
+  color: var(--subtext);
 }
 
 .item-detail-img-container {

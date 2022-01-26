@@ -5,12 +5,15 @@ block content
     div.container
       header
         div.header-container
+          if item.admin !== true
+            a.title-add-button(href=item.url+'/update')
+              h4 Update Item Info
 
-          a.title-add-button(href=item.url+'/update')
-            h4 Update Item Info
+            a.title-add-button(href=item.url+'/update_image')
+              h4 Update Item Image
 
-          a.title-add-button(href=item.url+'/update_image')
-            h4 Update Item Image
+          else 
+            h4.item-admin-protect-banner Due to misuse of this app this item is admin protected from updates.
 
           //- button.header-back-button(onclick='window.history.back()') Back
 
@@ -33,5 +36,8 @@ block content
 
     br
 
-    a.detail-delete-button(href=item.url+'/delete')
-      h4 DELETE ITEM
+    if item.admin !== true
+      a.detail-delete-button(href=item.url+'/delete')
+        h4 DELETE ITEM
+    else 
+      h4 This item is admin protected from deletion

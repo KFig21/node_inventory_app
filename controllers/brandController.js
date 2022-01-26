@@ -13,7 +13,7 @@ exports.brand_list = function (req, res, next) {
   async.parallel(
     {
       list_brand: function (callback) {
-        Brand.find({}, "name imageURL")
+        Brand.find({}, "name imageURL admin")
           .sort({ name: 1 })
           .populate("name")
           .exec(callback);
@@ -52,7 +52,7 @@ exports.brand_detail = function (req, res, next) {
       brand_items: function (callback) {
         Item.find(
           { brand: req.params.id },
-          "name price brand stock description categories imageURL"
+          "name price brand stock description categories imageURL admin"
         )
           .populate("brand")
           .populate("categories")
